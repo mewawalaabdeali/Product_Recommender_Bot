@@ -11,7 +11,7 @@ class RAGChainBuilder:
     def __init__(self, vector_store):
         self.vector_store = vector_store
         self.model = ChatGroq(model=Config.RAG_MODEL, temperature=0.5)
-        self.history = {}
+        self.history_store = {}
 
     def _get_history(self, session_id:str)->BaseChatMessageHistory:
         if session_id not in self.history_store:
@@ -28,7 +28,12 @@ class RAGChainBuilder:
 
         qa_prompt = ChatPromptTemplate.from_messages([
             ("system", """You're an e-commerce bot answering product-related queries using reviews and titles.
-             Stick to the context. Be concise and helpful. \n\nCONTEXT:\n{context}\n\nQUESTION: {input}"""),
+             Stick to the context. Be concise and helpful. Be point wise descriptive and 1 product per line - 
+             - Product name
+             - Product details
+             - Price if available
+
+              \n\nCONTEXT:\n{context}\n\nQUESTION: {input}"""),
              MessagesPlaceholder(variable_name="chat_history"),
              ("human", "{input}")
         ])
