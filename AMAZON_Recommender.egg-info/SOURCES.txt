@@ -1,0 +1,11 @@
+README.md
+setup.py
+AMAZON_Recommender.egg-info/PKG-INFO
+AMAZON_Recommender.egg-info/SOURCES.txt
+AMAZON_Recommender.egg-info/dependency_links.txt
+AMAZON_Recommender.egg-info/requires.txt
+AMAZON_Recommender.egg-info/top_level.txt
+src/__init__.py
+utils/__init__.py
+utils/custom_exception.py
+utils/logger.py
