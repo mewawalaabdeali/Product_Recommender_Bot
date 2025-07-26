@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Flipkart Chatbot</title>
+  <title>AmazeBot – Smart Shopping Assistant</title>
 
   <!-- Bootstrap & FontAwesome -->
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" rel="stylesheet">
-  
+
   <!-- jQuery -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-  <!-- Custom Amazon-style CSS -->
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}"/>
+  <!-- Your Amazon-style CSS -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
@@ -24,19 +24,19 @@
           <div class="card-header msg_head">
             <div class="d-flex align-items-center">
               <div class="img_cont">
-                <img src="https://static.vecteezy.com/system/resources/previews/016/017/018/non_2x/ecommerce-icon-free-png.png" class="rounded-circle user_img">
+                <img src="{{ url_for('static', filename='amazon-logo.png') }}" class="rounded-circle user_img">
                 <span class="online_icon"></span>
               </div>
               <div class="user_info">
-                <span>Alexa BOT:</span>
-                <p>Ask me anything!</p>
+                <span>AmazeBot</span>
+                <p>Your Smart Shopping Assistant</p>
               </div>
             </div>
           </div>
 
           <!-- Chat Body -->
           <div id="messageFormeight" class="card-body msg_card_body">
-            <!-- Chat messages will be appended here -->
+            <!-- Messages get injected here -->
           </div>
 
           <!-- Chat Input -->
@@ -63,30 +63,42 @@
         event.preventDefault();
 
         const date = new Date();
-        const str_time = date.getHours() + ":" + date.getMinutes();
+        const hours = date.getHours();
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        const str_time = `${hours}:${minutes}`;
         const rawText = $("#text").val();
 
-        // User message
-        const userHtml =
-          `<div class="d-flex justify-content-end mb-4">
-              <div class="msg_cotainer_send">${rawText}<span class="msg_time_send">${str_time}</span></div>
-              <div class="img_cont_msg"><img src="https://i.ibb.co/d5b84Xw/Untitled-design.png" class="rounded-circle user_img_msg"></div>
-           </div>`;
+        // User message block
+        const userHtml = `
+          <div class="d-flex justify-content-end mb-4">
+            <div class="msg_cotainer_send">${rawText}
+              <span class="msg_time_send">${str_time}</span>
+            </div>
+            <div class="img_cont_msg">
+              <img src="https://i.ibb.co/d5b84Xw/Untitled-design.png" class="rounded-circle user_img_msg">
+            </div>
+          </div>
+        `;
 
         $("#text").val("");
         $("#messageFormeight").append(userHtml);
 
-        // Bot reply
+        // AJAX call
         $.ajax({
           data: { msg: rawText },
           type: "POST",
           url: "/get",
         }).done(function (data) {
-          const botHtml =
-            `<div class="d-flex justify-content-start mb-4">
-                <div class="img_cont_msg"><img src="https://static.vecteezy.com/system/resources/previews/016/017/018/non_2x/ecommerce-icon-free-png.png" class="rounded-circle user_img_msg"></div>
-                <div class="msg_cotainer">${data}<span class="msg_time">${str_time}</span></div>
-             </div>`;
+          const botHtml = `
+            <div class="d-flex justify-content-start mb-4">
+              <div class="img_cont_msg">
+                <img src="./image.png" class="rounded-circle user_img_msg">
+              </div>
+              <div class="msg_cotainer">${data}
+                <span class="msg_time">${str_time}</span>
+              </div>
+            </div>
+          `;
           $("#messageFormeight").append($.parseHTML(botHtml));
         });
       });
