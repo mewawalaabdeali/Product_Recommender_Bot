@@ -3,31 +3,31 @@ kind: Deployment
 metadata:
   name: prometheus
   namespace: monitoring
-spec: 
+spec:
   replicas: 1
-  selector: 
+  selector:
     matchLabels:
-      apps: prometheus
+      app: prometheus
   template:
     metadata:
       labels:
-        apps: prometheus
+        app: prometheus
     spec:
       containers:
         - name: prometheus
           image: prom/prometheus
           args:
-           - "--config.file=/etc/prometheus/prometheus.yml"
-         ports:
-          - containerPort: 9090
-         volumeMounts:
-          - name: config-volume 
-            mountPath: /etc/prometheus
+            - "--config.file=/etc/prometheus/prometheus.yml"
+          ports:
+            - containerPort: 9090
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/prometheus
       volumes:
         - name: config-volume
           configMap:
-            name: prometheus-config 
-  
+            name: prometheus-config
+
 ---
 apiVersion: v1
 kind: Service
@@ -39,7 +39,7 @@ spec:
     app: prometheus
   ports:
     - protocol: TCP
-      port : 9090
+      port: 9090
       targetPort: 9090
       nodePort: 32001
-  type: NodePort 
+  type: NodePort
