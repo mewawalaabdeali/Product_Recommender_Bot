@@ -18,7 +18,7 @@ spec:
         - name: flaks-container
           image: flask-app:latest
           imagePullPolicy: IfNotPresent
-          port:
+          ports:
             - containerPort: 5000
           envFrom:
             - secretRef:
