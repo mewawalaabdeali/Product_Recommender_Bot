@@ -2,3 +2,4 @@
 
 Adding Dockerfile
 flask file and instructions
+![alt text](images/image.png)
