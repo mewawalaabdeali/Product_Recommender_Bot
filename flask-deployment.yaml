@@ -22,7 +22,7 @@ spec:
             - containerPort: 5000
           envFrom:
             - secretRef:
-                name: llmops-secret
+                name: llmops-secrets
               
 ---
 apiVersion: v1
