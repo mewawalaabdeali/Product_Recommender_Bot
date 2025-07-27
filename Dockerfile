@@ -1,4 +1,4 @@
-FROM python:3:10
+FROM python:3.10
 ###adding filename
 
 ##Adding one more line
